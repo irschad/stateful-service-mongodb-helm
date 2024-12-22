@@ -59,11 +59,6 @@ This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amaz
      kubectl get pods
      ```
 
-   - If needed, upgrade the NGINX ingress controller to use an internet-facing AWS load balancer:
-     ```bash
-     helm upgrade nginx-ingress ingress-nginx/ingress-nginx --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-scheme"=internet-facing
-     ```
-
 6. **Configure NGINX Ingress**:
    - Apply the ingress configuration using:
      ```bash
