@@ -1,6 +1,6 @@
 # Deploy MongoDB Stateful Service on Kubernetes Using Helm
 
-This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amazon Elastic Kubernetes Service (EKS) using Helm, with data persistence backed by AWS cloud storage. It also includes the deployment of Mongo Express UI for interacting with MongoDB and configuring an NGINX ingress to expose the UI via a web browser.
+This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amazon Elastic Kubernetes Service (EKS) using Helm, with data persistence backed by AWS cloud storage via EBS volumes. It also includes the deployment of Mongo Express UI for interacting with MongoDB and configuring an NGINX ingress to expose the UI via a web browser.
 
 ## Project Overview
 
@@ -67,7 +67,7 @@ This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amaz
 
 ## Accessing the Mongo Express UI
 
-Once the NGINX ingress is configured, access the Mongo Express UI via the external URL provided by the NGINX ingress.
+Once the NGINX ingress is configured, access the Mongo Express UI via the external URL provided by the NGINX ingress. Add a new database and then collection in that database to check persistence. 
 
 ## Conclusion
 
