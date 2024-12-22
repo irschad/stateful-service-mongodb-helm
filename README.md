@@ -56,7 +56,7 @@ This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amaz
      ```bash
      helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
      helm install nginx-ingress ingress-nginx/ingress-nginx --set controller.publishService.enabled=true --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-scheme"=internet-facing
-     kubectl get pods
+     kubectl get svc
      ```
 
 6. **Configure NGINX Ingress**:
