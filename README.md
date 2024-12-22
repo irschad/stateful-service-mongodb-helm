@@ -1,6 +1,6 @@
 # Deploy MongoDB Stateful Service on Kubernetes Using Helm
 
-This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amazon Elastic Kubernetes Service (EKS) using Helm, with data persistence backed by AWS cloud storage via EBS volumes. It also includes the deployment of Mongo Express UI for interacting with MongoDB and configuring an NGINX ingress to expose the UI via a web browser.
+This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amazon Elastic Kubernetes Service (EKS) using Helm, with data persistence backed by AWS cloud storage. It also includes the deployment of Mongo Express UI for interacting with MongoDB and configuring an NGINX ingress to expose the UI via a web browser.
 
 ## Project Overview
 
@@ -39,27 +39,38 @@ This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amaz
      helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver --namespace kube-system --set enableVolumeScheduling=true --set enableVolumeResizing=true --set enableVolumeSnapshot=true
      ```
 
-3. **Deploy MongoDB with Helm**:
+3. **Create Storage Using StorageClass**:
+   - Before deploying MongoDB, apply the `sc.yaml` file to create the AWS EBS-backed StorageClass for persistent volumes:
+     ```bash
+     kubectl apply -f sc.yaml
+     ```
+
+4. **Deploy MongoDB with Helm**:
    - Install the MongoDB Helm chart with:
      ```bash
      helm install mongodb -f helm-mongodb.yaml stable/mongodb
      ```
 
-4. **Deploy Mongo Express**:
+5. **Deploy Mongo Express**:
    - Apply the Mongo Express deployment using:
      ```bash
      kubectl apply -f mongo-express.yaml
      ```
 
-5. **Install NGINX Ingress Controller**:
+6. **Install NGINX Ingress Controller**:
    - Add the NGINX ingress repository and install the controller:
      ```bash
      helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
      helm install nginx-ingress ingress-nginx/ingress-nginx --set controller.publishService.enabled=true --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-scheme"=internet-facing
-     kubectl get svc
+     kubectl get pods
      ```
 
-6. **Configure NGINX Ingress**:
+   - If needed, upgrade the NGINX ingress controller to use an internet-facing AWS load balancer:
+     ```bash
+     helm upgrade nginx-ingress ingress-nginx/ingress-nginx --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-scheme"=internet-facing
+     ```
+
+7. **Configure NGINX Ingress**:
    - Apply the ingress configuration using:
      ```bash
      kubectl apply -f helm-ingress.yaml
@@ -67,7 +78,7 @@ This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amaz
 
 ## Accessing the Mongo Express UI
 
-Once the NGINX ingress is configured, access the Mongo Express UI via the external URL provided by the NGINX ingress. Add a new database and then collection in that database to check persistence. 
+Once the NGINX ingress is configured, access the Mongo Express UI via the external URL provided by the NGINX ingress.
 
 ## Conclusion
 
