@@ -1,0 +1,6 @@
+architecture: replicaset
+replicaCount: 3
+persistence:
+  size: 2Gi
+auth:
+  rootPassword: secret-root-pwd
