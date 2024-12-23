@@ -28,7 +28,7 @@ This project demonstrates how to deploy a replicated MongoDB StatefulSet on Amaz
 1. **Create an EKS Cluster**:
    - Use the `eksctl` command to create a managed EKS cluster:
      ```bash
-     eksctl create cluster --name mongo-cluster --region <region> --nodegroup-name mongo-nodes --nodes 3 --nodes-min 1 --nodes-max 3 --managed
+     eksctl create cluster --name mongo-cluster --region us-east-1 --nodegroup-name mongo-nodes --nodes 3 --nodes-min 1 --nodes-max 3 --managed
      ```
 
 2. **Install AWS EBS CSI Driver**:
